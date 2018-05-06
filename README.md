@@ -11,14 +11,14 @@
 **This project is intended to run on unix systems**
 
 1. As said, this project needs a mongodb instance running on mongodb://127.0.0.1:27017/
-1. In the main folder run the following command: npm start
+1. In the main folder run the following command: **npm start**
 
 ### IMPORTANT
 ** Inside the folder utils, it has a file with the Requests set up. It calls Requests.json
 
 ### Running the tests
 1. Start the server.
-1. In the main folder run the following command: npm test
+1. In the main folder run the following command: **npm test**
 1. It will run and stop and give the information, on the terminal.
 
 
