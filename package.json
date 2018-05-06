@@ -1,0 +1,23 @@
+{
+  "name": "fashioncloud",
+  "version": "1.0.0",
+  "description": "challenge for fashion cloud",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheuspavin/fashionCloud.git"
+  },
+  "author": "Matheus Pavin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matheuspavin/fashionCloud/issues"
+  },
+  "homepage": "https://github.com/matheuspavin/fashionCloud#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}
