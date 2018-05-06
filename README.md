@@ -10,7 +10,7 @@
 1. In the main folder run the install.sh script.
 1. Run the newly created run.sh file.
 
-#IMPORTANT
+#IMPORTANT#
 ** Inside the folder utils, it has a file with the Requests set up. It calls Requests.json
 
 # Running the tests
@@ -19,7 +19,7 @@
 1. It will run and stop and give the information, on the terminal.
 
 
-#ENDPOINTS
+#ENDPOINTS#
 
 **Endpoint that returns the cached data for a given key**
 - GET
