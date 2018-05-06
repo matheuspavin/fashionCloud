@@ -8,10 +8,20 @@ describe('Create and update cache tests',  function () {
                key: 'Test key'
         }
         let cacheInserted = await cacheService.insertCache(cache.key, 'testCache');
+        let caches = await cacheService.getAll('testCache');
         expect(cacheInserted.key).to.be.equal(cache.key);
+        expect(caches.length).to.be.equal(1);
     });
 
-    afterEach(async function () {
-        await cacheService.deleteAll('testCache');
+    it('Update a cache ', async function () {
+        let cache = { 
+               key: 'Test key'
+        }
+        let cacheInserted = await cacheService.insertCache(cache.key, 'testCache');
+        expect(cacheInserted.key).to.be.equal(cache.key);
     });
+});
+
+afterEach(async function () {
+    await cacheService.deleteAll('testCache');
 });
