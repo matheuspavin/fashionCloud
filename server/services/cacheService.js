@@ -2,45 +2,45 @@ const databaseService = require('../infra/database');
 
 const defaultCollection = 'cache';
 
-const getAll = async function (collection = defaultCollection) {
-    const all = await databaseService.getAll(collection);
+const getAll = async function () {
+    const all = await databaseService.getAll();
     return all;
 };
 
-const getCache = function (key, collection = defaultCollection) {
-    return recoverCacheRules(key, collection);
+const getCache = function (key) {
+    return recoverCacheRules(key);
 };
 
-const insertCache = async function (key, body, collection = defaultCollection) {
+const insertCache = async function (key, body) {
     const cache = createNewCache(key, body);
-    const validate = await validateCache(cache, collection);
-    return databaseService.updateCache(collection, cache);
+    const validate = await validateCache(cache);
+    return databaseService.updateCache(cache);
 };
 
-const updateCache = function (cache, collection = defaultCollection) {
-    return databaseService.updateCache(collection, cache);
+const updateCache = function (cache) {
+    return databaseService.updateCache(cache);
 };
 
-const deleteAll = function (collection = defaultCollection) {
-    return databaseService.deleteAll(collection);
+const deleteAll = function () {
+    return databaseService.deleteAll();
 };
 
-const deleteCache = function (key, collection = defaultCollection){
-    return databaseService.deleteCache(collection, key);
+const deleteCache = function (key){
+    return databaseService.deleteCache(key);
 };
 
-const recoverCacheRules = async function (key, collection) {
-    const cache = await databaseService.getCache(collection, key);
+const recoverCacheRules = async function (key) {
+    const cache = await databaseService.getCache(key);
     if (cache) {
         console.log('Cache hit');
         return cache;
     } else {
         console.log('Cache miss')
-        return insertCache(key, createNewCache(key, {}), collection);
+        return insertCache(key, createNewCache(key));
     }
 };
 
-const createNewCache = function (key, body) {
+const createNewCache = function (key, body = {}) {
     return {
         key: key,
         date: new Date(),
@@ -49,8 +49,8 @@ const createNewCache = function (key, body) {
     }
 };
 
-const validateCache = async function (cache, collection) {
-    const validate = await databaseService.getCache(cache.key, collection);
+const validateCache = async function (cache) {
+    const validate = await databaseService.getCache(cache.key);
     return validate || {};
 }
 

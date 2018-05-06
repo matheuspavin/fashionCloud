@@ -7,8 +7,8 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            let cache = await cacheService.getCache(newCache.key, 'testCache');
-            let caches = await cacheService.getAll('testCache');
+            let cache = await cacheService.getCache(newCache.key);
+            let caches = await cacheService.getAll();
             expect(cache.key).to.be.equal(newCache.key);
             expect(caches.length).to.be.equal(1);
         });
@@ -17,9 +17,9 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            await cacheService.insertCache(newCache.key, 'testCache');
-            let cache = await cacheService.getCache(newCache.key, 'testCache');
-            let caches = await cacheService.getAll('testCache');
+            await cacheService.insertCache(newCache.key);
+            let cache = await cacheService.getCache(newCache.key);
+            let caches = await cacheService.getAll();
             expect(cache.key).to.be.equal(newCache.key);
             expect(caches.length).to.be.equal(1);
         });
@@ -33,9 +33,9 @@ describe('Cache tests',  function () {
                 { key: 'Test 5'}
             ]
             for (key of keys) {
-                await cacheService.insertCache(key.key, {}, 'testCache');
+                await cacheService.insertCache(key.key, {});
             }
-            let caches = await cacheService.getAll('testCache');
+            let caches = await cacheService.getAll();
             expect(caches.length).to.be.equal(5);
         });
 
@@ -47,8 +47,8 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            let cache = await cacheService.insertCache(newCache.key, {}, 'testCache');
-            let caches = await cacheService.getAll('testCache');
+            let cache = await cacheService.insertCache(newCache.key, {});
+            let caches = await cacheService.getAll();
             expect(cache.key).to.be.equal(newCache.key);
             expect(caches.length).to.be.equal(1);
         });
@@ -57,7 +57,7 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            let cache = await cacheService.insertCache(newCache.key, 'testCache');
+            let cache = await cacheService.insertCache(newCache.key);
             expect(cache.key).to.be.equal(newCache.key);
         });
     });
@@ -67,9 +67,9 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            let cache = await cacheService.insertCache(newCache.key, {}, 'testCache');
-            await cacheService.deleteCache(cache.key, 'testCache');
-            let caches = await cacheService.getAll('testCache');
+            let cache = await cacheService.insertCache(newCache.key, {});
+            await cacheService.deleteCache(cache.key);
+            let caches = await cacheService.getAll();
             expect(caches.length).to.be.equal(0);
             expect(cache.key).to.be.equal(newCache.key);
         });
@@ -83,17 +83,17 @@ describe('Cache tests',  function () {
                 { key: 'Test 5'}
             ]
             for (key of keys) {
-                await cacheService.insertCache(key.key, {}, 'testCache');
+                await cacheService.insertCache(key.key);
             }
-            let caches = await cacheService.getAll('testCache');
+            let caches = await cacheService.getAll();
             expect(caches.length).to.be.equal(5);
-            await cacheService.deleteAll('testCache');
-            let deletedCaches = cacheService.getAll('testCache');
+            await cacheService.deleteAll();
+            let deletedCaches = cacheService.getAll();
             expect(deletedCaches.length).to.be.equal(undefined);
         });
     });
 
     afterEach(async function () {
-        await cacheService.deleteAll('testCache');
+        await cacheService.deleteAll();
     });
 });
