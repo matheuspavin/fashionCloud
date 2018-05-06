@@ -1,38 +1,74 @@
 dbConnection = require('./databaseConnection');
 
-const mainDb = async function () {
+const mainDb = async function (collection) {
     const client = await dbConnection.clientConnection();
-    return await client.collection('cache');
+    return await client.collection(collection);
 };
 
-const insert = async function () {
-    const cacheCollection = await mainDb();
+
+const getAll = async function (collection) {
     try {
-        cacheCollection.insert({name: "testCache", description: "testing the insert of the cache"}, function(err, result) {
+        const cacheCollection = await mainDb(collection);
+        const cursor = cacheCollection.find();
+        let result = [];
+        while(await cursor.hasNext()) {
+            const doc = await cursor.next();
+            result.push(doc);
+        }
+        return result;
+    } catch (err) {
+        throw(err);
+    }
+};
+
+const getCache = async function (collection, key) {
+    try {
+        const cacheCollection = await mainDb(collection);
+        const cursor = await cacheCollection.findOne({key: key});
+        console.log(cursor);
+        return cursor;
+    } catch (err) {
+        throw(err);
+    }
+}
+
+
+const insert = async function (collection, insertObj) {
+    const cacheCollection = await mainDb(collection);
+    try {
+        cacheCollection.insert(insertObj, function(err, result) {
             console.log("entry saved");
             return;
         });
     } catch (err) {
-        console.log(err);
+        throw(err);
     }
 };
 
-const getAll = async function () {
-    const cacheCollection = await mainDb();
-    const cursor = cacheCollection.find();
-        cursor.each(function(err, doc) {
-            if(err)
-                throw err;
-            if(doc==null)
-                return;
-        
-            console.log("document find:");
-            console.log(JSON.stringify(doc));
-    });
+const updateCache = async function (collection, cache) {
+    const cacheCollection = await mainDb(collection);
+    try {
+        const cursor = cacheCollection.updateOne({key: cache.key}, {$set: {date: cache.date, hash: cache.hash}});  
+        return await getCache(collection, cache.key);
+    } catch (err) {
+        throw(err);
+    }
+};
+
+const deleteAll = async function (collection) {
+    try {
+        const cacheCollection = await mainDb(collection);
+        const cursor = cacheCollection.deleteMany();
+        return 'All cache deleted with sucess';
+    } catch (err) {
+        throw(err);
+    }
 };
 
 module.exports = {
-    // db,
+    getAll,
+    getCache,
     insert,
-    getAll
-}
+    updateCache,
+    deleteAll
+};
