@@ -125,7 +125,9 @@ describe('Cache tests', function () {
         await cacheService.deleteAll();
     });
 
-    after(function () {
+    after(function (done) {
+        sleep(5000);
+        done();
         process.exit();
     });
 });
