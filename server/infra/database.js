@@ -25,7 +25,6 @@ const getCache = async function (collection, key) {
     try {
         const cacheCollection = await mainDb(collection);
         const cursor = await cacheCollection.findOne({key: key});
-        console.log(cursor);
         return cursor;
     } catch (err) {
         throw(err);
@@ -36,10 +35,8 @@ const getCache = async function (collection, key) {
 const insert = async function (collection, insertObj) {
     const cacheCollection = await mainDb(collection);
     try {
-        cacheCollection.insert(insertObj, function(err, result) {
-            console.log("entry saved");
-            return;
-        });
+        let response = await cacheCollection.insertOne(insertObj);
+        return response.ops[0];
     } catch (err) {
         throw(err);
     }
