@@ -2,7 +2,7 @@
 
 **Use will, but quote, so we're all happy.**
 
-**CONTACT INFO**
+**CONTACT INFO:**
 
 **[Matheus Pavin](https://matheuspavin.github.io/index.html)**
 
