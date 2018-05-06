@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.use('/', express.static('/'));
+// app.use('/client', express.static('/'));
 
 app.all('*', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -21,7 +21,7 @@ app.all('*', function(req, res, next) {
 	next();
 });
 
-app.use('/caches', cacheRoute);
+app.use('/cache', cacheRoute);
 app.get("/", function (req, res) {
 	res.redirect("cache");
 });
