@@ -3,26 +3,31 @@ const databaseService = require('../infra/database');
 const defaultCollection = 'cache';
 
 const getAll = async function (collection = defaultCollection) {
-    return await databaseService.getAll(collection);
+    const all = await databaseService.getAll(collection);
+    return all;
 };
 
-const getCache = async function (key, collection = defaultCollection) {
-    return await recoverCacheRules(key, collection);
+const getCache = function (key, collection = defaultCollection) {
+    return recoverCacheRules(key, collection);
 };
 
-const insertCache = async function (key, collection = defaultCollection) {
-    const cache = createNewCache(key);
-    return await databaseService.insert(collection, cache);
+const insertCache = async function (key, body, collection = defaultCollection) {
+    const cache = createNewCache(key, body);
+    const validate = await validateCache(cache, collection);
+    return databaseService.updateCache(collection, cache);
 };
 
-const updateCache = async function (cache, collection = defaultCollection) {
-    return await databaseService.updateCache(collection, cache);
+const updateCache = function (cache, collection = defaultCollection) {
+    return databaseService.updateCache(collection, cache);
 };
 
-const deleteAll = async function (collection = defaultCollection) {
-    return await databaseService.deleteAll(collection);
+const deleteAll = function (collection = defaultCollection) {
+    return databaseService.deleteAll(collection);
 };
 
+const deleteCache = function (key, collection = defaultCollection){
+    return databaseService.deleteCache(collection, key);
+};
 
 const recoverCacheRules = async function (key, collection) {
     const cache = await databaseService.getCache(collection, key);
@@ -31,16 +36,22 @@ const recoverCacheRules = async function (key, collection) {
         return cache;
     } else {
         console.log('Cache miss')
-        return await insertCache(key, collection);
+        return insertCache(key, createNewCache(key, {}), collection);
     }
 };
 
-const createNewCache = function (key) {
-    return cache = {
+const createNewCache = function (key, body) {
+    return {
         key: key,
         date: new Date(),
-        hash: Math.random().toString(36).substr(1,16)
+        ttl: body.ttl || 1000,
+        data: body.data || Math.random().toString(36).substr(2,32)
     }
+};
+
+const validateCache = async function (cache, collection) {
+    const validate = await databaseService.getCache(cache.key, collection);
+    return validate || {};
 }
 
 
@@ -49,5 +60,6 @@ module.exports = {
     getCache,
     insertCache,
     updateCache,
-    deleteAll
+    deleteAll,
+    deleteCache
 };

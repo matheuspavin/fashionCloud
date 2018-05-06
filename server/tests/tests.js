@@ -2,7 +2,7 @@ const expect = require('chai').expect
 const cacheService = require('../services/cacheService');
 
 describe('Cache tests',  function () {
-    describe.only('Get cache tests',  function () {
+    describe('Get cache tests',  function () {
         it('Should try to get a non-existent cache and create ', async function () {
             let newCache = { 
                 key: 'Test key'
@@ -23,6 +23,22 @@ describe('Cache tests',  function () {
             expect(cache.key).to.be.equal(newCache.key);
             expect(caches.length).to.be.equal(1);
         });
+
+        it('Should get all caches stored', async function () {
+            let keys = [
+                { key: 'Test 1'},
+                { key: 'Test 2'},
+                { key: 'Test 3'},
+                { key: 'Test 4'},
+                { key: 'Test 5'}
+            ]
+            for (key of keys) {
+                await cacheService.insertCache(key.key, {}, 'testCache');
+            }
+            let caches = await cacheService.getAll('testCache');
+            expect(caches.length).to.be.equal(5);
+        });
+
     });
 
     describe('Create and update cache tests',  function () {
@@ -31,7 +47,7 @@ describe('Cache tests',  function () {
             let newCache = { 
                 key: 'Test key'
             }
-            let cache = await cacheService.insertCache(newCache.key, 'testCache');
+            let cache = await cacheService.insertCache(newCache.key, {}, 'testCache');
             let caches = await cacheService.getAll('testCache');
             expect(cache.key).to.be.equal(newCache.key);
             expect(caches.length).to.be.equal(1);
@@ -43,6 +59,37 @@ describe('Cache tests',  function () {
             }
             let cache = await cacheService.insertCache(newCache.key, 'testCache');
             expect(cache.key).to.be.equal(newCache.key);
+        });
+    });
+
+    describe('Remove cache tests',  function () {
+        it('Should remove a specific cache from the database', async function () {
+            let newCache = { 
+                key: 'Test key'
+            }
+            let cache = await cacheService.insertCache(newCache.key, {}, 'testCache');
+            await cacheService.deleteCache(cache.key, 'testCache');
+            let caches = await cacheService.getAll('testCache');
+            expect(caches.length).to.be.equal(0);
+            expect(cache.key).to.be.equal(newCache.key);
+        });
+
+        it('Should delete all caches stored', async function () {
+            let keys = [
+                { key: 'Test 1'},
+                { key: 'Test 2'},
+                { key: 'Test 3'},
+                { key: 'Test 4'},
+                { key: 'Test 5'}
+            ]
+            for (key of keys) {
+                await cacheService.insertCache(key.key, {}, 'testCache');
+            }
+            let caches = await cacheService.getAll('testCache');
+            expect(caches.length).to.be.equal(5);
+            await cacheService.deleteAll('testCache');
+            let deletedCaches = cacheService.getAll('testCache');
+            expect(deletedCaches.length).to.be.equal(undefined);
         });
     });
 

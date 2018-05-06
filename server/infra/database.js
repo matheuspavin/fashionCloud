@@ -45,8 +45,8 @@ const insert = async function (collection, insertObj) {
 const updateCache = async function (collection, cache) {
     const cacheCollection = await mainDb(collection);
     try {
-        const cursor = cacheCollection.updateOne({key: cache.key}, {$set: {date: cache.date, hash: cache.hash}});  
-        return await getCache(collection, cache.key);
+        const cursor = await cacheCollection.updateOne({key: cache.key}, {$set: {key: cache.key, date: cache.date, data: cache.data, ttl: cache.ttl}}, {upsert: true});  
+        return getCache(collection, cache.key);
     } catch (err) {
         throw(err);
     }
@@ -62,10 +62,21 @@ const deleteAll = async function (collection) {
     }
 };
 
+const deleteCache = async function (collection, key) {
+    try {
+        const cacheCollection = await mainDb(collection);
+        const cursor = await cacheCollection.deleteOne({key: key});
+        return 'Cache deleted with sucess';
+    } catch (err) {
+        throw(err);
+    }
+};
+
 module.exports = {
     getAll,
     getCache,
     insert,
     updateCache,
-    deleteAll
+    deleteAll,
+    deleteCache
 };
