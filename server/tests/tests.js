@@ -124,6 +124,10 @@ describe('Cache tests',  function () {
     afterEach(async function () {
         await cacheService.deleteAll();
     });
+    
+    after(function () {
+        process.exit();
+    });
 });
 
 const sleep = function (timeout) {

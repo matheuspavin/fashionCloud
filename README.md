@@ -1,6 +1,6 @@
 # Fashion Cloud Test - Matheus Pavin Pedroso
 
-**Use will, but quote, so we're all happy.**
+**Use at will, but quote, so we're all happy.**
 
 **CONTACT INFO:**
 
@@ -10,16 +10,15 @@
 
 **This project is intended to run on unix systems**
 
-1. As said, this project needed a mongodb instance running on mongodb://127.0.0.1:27017/
-1. In the main folder run the install.sh script.
-1. Run the newly created run.sh file.
+1. As said, this project needs a mongodb instance running on mongodb://127.0.0.1:27017/
+1. In the main folder run the following command: npm start
 
 ### IMPORTANT
 ** Inside the folder utils, it has a file with the Requests set up. It calls Requests.json
 
 ### Running the tests
-1. Start the server, by running the run.sh file.
-1. Run the file tests.sh.
+1. Start the server.
+1. In the main folder run the following command: npm test
 1. It will run and stop and give the information, on the terminal.
 
 
