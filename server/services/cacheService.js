@@ -63,6 +63,9 @@ const validateTtl = async function (cache) {
     return (Math.abs(diff / 1000) < cache.ttl);
 };
 
+// I always remove the cache with the oldest date, since all the oldest is probably less used. 
+// In a real process, some other checks are needed, but in this controlled scenario, 
+// it's the most elegant way.
 const validateCacheEntries = async function () {
     const caches = await getAll();
     if (caches.length >= 5) {
