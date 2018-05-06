@@ -14,12 +14,14 @@
 1. In the main folder run the following command: **npm start**
 
 ### IMPORTANT
-** Inside the /server/utils folder, it has a file with the Requests set up. It is called Requests.json
+**Inside the /server/utils folder, it has a file with the Requests set up. It is called Requests.json**
+**The mongodb settings can be modified in the config.js file, inside the config folder.**
 
 ### Running the tests
 1. Start the server.
 1. In the main folder run the following command: **npm test**
 1. It will run, stop and provide the output on the terminal
+1. The tests run in a different collection, not modifying the main collection.
 
 
 ## ENDPOINTS

@@ -4,7 +4,7 @@
   "description": "challenge for fashion cloud",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000 tests.js"
+    "test": "export TEST_COLLECTION='testCache'; mocha --timeout 10000 tests.js"
   },
   "repository": {
     "type": "git",
