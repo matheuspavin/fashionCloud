@@ -33,6 +33,10 @@ const recoverCacheRules = async function (key) {
     const cache = await databaseService.getCache(key);
     if (cache) {
         console.log('Cache hit');
+        if (validateTtl(cache)) {
+            console.log('updating ttl');
+            return insertCache(key, createNewCache(key));
+        }
         return cache;
     } else {
         console.log('Cache miss')
@@ -44,7 +48,7 @@ const createNewCache = function (key, body = {}) {
     return {
         key: key,
         date: new Date(),
-        ttl: body.ttl || 1000,
+        ttl: body.ttl || 5,
         data: body.data || Math.random().toString(36).substr(2,32)
     }
 };
@@ -52,7 +56,14 @@ const createNewCache = function (key, body = {}) {
 const validateCache = async function (cache) {
     const validate = await databaseService.getCache(cache.key);
     return validate || {};
-}
+};
+
+const validateTtl = async function (cache) {
+    const diff = new Date().getTime() - new Date(cache.date).getTime();
+    return (Math.abs(diff/1000) < cache.ttl);
+};
+
+
 
 
 module.exports = {
