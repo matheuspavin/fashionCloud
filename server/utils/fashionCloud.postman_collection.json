@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "259f60ab-124a-4385-87d8-f787be31579a",
+		"name": "fashionCloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get caches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4300/cache",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate a key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4300/cache/testKey6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache",
+						"testKey6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All Caches",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4300/cache",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific cache",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4300/cache/testKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache",
+						"testKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a cache",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "testKey",
+							"type": "text"
+						},
+						{
+							"key": "ttl",
+							"value": "teste23",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4300/cache/testKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache",
+						"testKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a specific key",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4300/cache/testKey4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4300",
+					"path": [
+						"cache",
+						"testKey4"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

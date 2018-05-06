@@ -1,44 +1,55 @@
-dbConnection = require('./databaseConnection');
+const MongoClient = require('mongodb').MongoClient;
+const config = require('../config/config');
 
-const defaultCollection = 'cache';
-
-const mainDb = async function () {
-    const client = await dbConnection.clientConnection();
-    return await client.collection(defaultCollection);
+const clientConnection = async function () {
+    return new Promise(function (resolve, reject) {
+        try {
+            MongoClient.connect(config.mongo.url, async function (err, client) {
+                const db = await client.db(config.mongo.db);
+                return resolve(db);
+            });
+        } catch (err) {
+            throw (err);
+        }
+    });
 };
 
+const mainDb = async function () {
+    const client = await clientConnection();
+    return await client.collection(config.mongo.collection);
+};
 
 const getAll = async function () {
     try {
         const cacheCollection = await mainDb();
         const cursor = await cacheCollection.find().toArray();
         const result = [];
-        for(const cache of cursor){
-            result.push({key: cache.key});
+        for (const cache of cursor) {
+            result.push({ key: cache.key });
         }
         return result;
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 
 const getCache = async function (key) {
     try {
         const cacheCollection = await mainDb();
-        const cursor = await cacheCollection.findOne({key: key});
+        const cursor = await cacheCollection.findOne({ key: key });
         return cursor;
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 
 const getOldest = async function () {
     try {
         const cacheCollection = await mainDb();
-        const cursor =  await cacheCollection.find().sort({date: 1}).limit(1).toArray();
+        const cursor = await cacheCollection.find().sort({ date: 1 }).limit(1).toArray();
         return cursor[0];
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 }
 
@@ -49,17 +60,17 @@ const insert = async function (insertObj) {
         let response = await cacheCollection.insertOne(insertObj);
         return response.ops[0];
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 
 const updateCache = async function (cache) {
     const cacheCollection = await mainDb();
     try {
-        const cursor = await cacheCollection.updateOne({key: cache.key}, {$set: {key: cache.key, date: cache.date, data: cache.data, ttl: cache.ttl}}, {upsert: true});  
+        const cursor = await cacheCollection.updateOne({ key: cache.key }, { $set: { key: cache.key, date: cache.date, data: cache.data, ttl: cache.ttl } }, { upsert: true });
         return getCache(cache.key);
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 
@@ -69,17 +80,17 @@ const deleteAll = async function () {
         const cursor = cacheCollection.deleteMany();
         return 'All cache deleted with sucess';
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 
 const deleteCache = async function (key) {
     try {
         const cacheCollection = await mainDb();
-        const cursor = await cacheCollection.deleteOne({key: key});
+        const cursor = await cacheCollection.deleteOne({ key: key });
         return 'Cache deleted with sucess';
     } catch (err) {
-        throw(err);
+        throw (err);
     }
 };
 

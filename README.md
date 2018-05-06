@@ -14,12 +14,12 @@
 1. In the main folder run the following command: **npm start**
 
 ### IMPORTANT
-** Inside the folder utils, it has a file with the Requests set up. It calls Requests.json
+** Inside the /server/utils folder, it has a file with the Requests set up. It is called Requests.json
 
 ### Running the tests
 1. Start the server.
 1. In the main folder run the following command: **npm test**
-1. It will run and stop and give the information, on the terminal.
+1. It will run, stop and provide the output on the terminal
 
 
 ## ENDPOINTS

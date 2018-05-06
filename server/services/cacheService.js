@@ -26,7 +26,7 @@ const deleteAll = function () {
     return databaseService.deleteAll();
 };
 
-const deleteCache = function (key){
+const deleteCache = function (key) {
     return databaseService.deleteCache(key);
 };
 
@@ -35,7 +35,6 @@ const recoverCacheRules = async function (key) {
     if (cache) {
         console.log('Cache hit');
         if (validateTtl(cache)) {
-            console.log('updating ttl');
             return insertCache(key, createNewCache(key));
         }
         return cache;
@@ -50,7 +49,7 @@ const createNewCache = function (key, body = {}) {
         key: key,
         date: new Date(),
         ttl: body.ttl || 5,
-        data: body.data || Math.random().toString(36).substr(2,32)
+        data: body.data || Math.random().toString(36).substr(2, 32)
     }
 };
 
@@ -61,10 +60,10 @@ const validateCache = async function (cache) {
 
 const validateTtl = async function (cache) {
     const diff = new Date().getTime() - new Date(cache.date).getTime();
-    return (Math.abs(diff/1000) < cache.ttl);
+    return (Math.abs(diff / 1000) < cache.ttl);
 };
 
-const validateCacheEntries  = async function () {
+const validateCacheEntries = async function () {
     const caches = await getAll();
     if (caches.length >= 5) {
         const oldest = await databaseService.getOldest();

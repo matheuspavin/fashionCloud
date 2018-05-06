@@ -1,10 +1,10 @@
 const expect = require('chai').expect
 const cacheService = require('../services/cacheService');
 
-describe('Cache tests',  function () {
-    describe('Get cache tests',  function () {
+describe('Cache tests', function () {
+    describe('Get cache tests', function () {
         it('Should try to get a non-existent cache and create ', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key'
             }
             const cache = await cacheService.getCache(newCache.key);
@@ -14,7 +14,7 @@ describe('Cache tests',  function () {
         });
 
         it('Should get a existent cache and only return their data', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key'
             }
             await cacheService.insertCache(newCache.key);
@@ -26,11 +26,11 @@ describe('Cache tests',  function () {
 
         it('Should get all caches stored', async function () {
             const keys = [
-                { key: 'Test 1'},
-                { key: 'Test 2'},
-                { key: 'Test 3'},
-                { key: 'Test 4'},
-                { key: 'Test 5'}
+                { key: 'Test 1' },
+                { key: 'Test 2' },
+                { key: 'Test 3' },
+                { key: 'Test 4' },
+                { key: 'Test 5' }
             ]
             for (key of keys) {
                 await cacheService.insertCache(key.key, {});
@@ -40,7 +40,7 @@ describe('Cache tests',  function () {
         });
 
         it('Should try to get a expired ttl cache ', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key',
                 ttl: 1
             }
@@ -52,10 +52,10 @@ describe('Cache tests',  function () {
 
     });
 
-    describe('Create and update cache tests',  function () {
+    describe('Create and update cache tests', function () {
 
         it('Create a new cache ', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key'
             }
             const cache = await cacheService.insertCache(newCache.key, {});
@@ -65,7 +65,7 @@ describe('Cache tests',  function () {
         });
 
         it('Update a cache ', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key'
             }
             const cache = await cacheService.insertCache(newCache.key);
@@ -74,12 +74,12 @@ describe('Cache tests',  function () {
 
         it('Should create above the maximu quantity of caches', async function () {
             const keys = [
-                { key: 'Test 1'},
-                { key: 'Test 2'},
-                { key: 'Test 3'},
-                { key: 'Test 4'},
-                { key: 'Test 5'},
-                { key: 'Test 6'},
+                { key: 'Test 1' },
+                { key: 'Test 2' },
+                { key: 'Test 3' },
+                { key: 'Test 4' },
+                { key: 'Test 5' },
+                { key: 'Test 6' },
             ]
             for (key of keys) {
                 await sleep(500);
@@ -90,9 +90,9 @@ describe('Cache tests',  function () {
         });
     });
 
-    describe('Remove cache tests',  function () {
+    describe('Remove cache tests', function () {
         it('Should remove a specific cache from the database', async function () {
-            const newCache = { 
+            const newCache = {
                 key: 'Test key'
             }
             const cache = await cacheService.insertCache(newCache.key, {});
@@ -104,11 +104,11 @@ describe('Cache tests',  function () {
 
         it('Should delete all caches stored', async function () {
             const keys = [
-                { key: 'Test 1'},
-                { key: 'Test 2'},
-                { key: 'Test 3'},
-                { key: 'Test 4'},
-                { key: 'Test 5'}
+                { key: 'Test 1' },
+                { key: 'Test 2' },
+                { key: 'Test 3' },
+                { key: 'Test 4' },
+                { key: 'Test 5' }
             ]
             for (key of keys) {
                 await cacheService.insertCache(key.key);
@@ -124,14 +124,14 @@ describe('Cache tests',  function () {
     afterEach(async function () {
         await cacheService.deleteAll();
     });
-    
+
     after(function () {
         process.exit();
     });
 });
 
 const sleep = function (timeout) {
-    return new Promise (function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         setTimeout(function () {
             resolve();
         }, timeout);
