@@ -1,8 +1,9 @@
 # Fashion Cloud Test - Matheus Pavin Pedroso
 
-### Use will, but quote, so we're all happy.
+**Use will, but quote, so we're all happy.**
 
 **CONTACT INFO**
+
 **[Matheus Pavin](https://matheuspavin.github.io/index.html)**
 
 # Instructions
@@ -43,7 +44,3 @@
 **Endpoint that removes all keys from the cache**
 - DELETE
 - http://localhost:4300/cache
-
-
-## CONTACT INFO
-### [Matheus Pavin](https://matheuspavin.github.io/index.html)
