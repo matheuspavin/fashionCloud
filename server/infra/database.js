@@ -11,11 +11,10 @@ const mainDb = async function () {
 const getAll = async function () {
     try {
         const cacheCollection = await mainDb();
-        const cursor = cacheCollection.find();
-        let result = [];
-        while(await cursor.hasNext()) {
-            const doc = await cursor.next();
-            result.push(doc);
+        const cursor = await cacheCollection.find().toArray();
+        const result = [];
+        for(const cache of cursor){
+            result.push({key: cache.key});
         }
         return result;
     } catch (err) {
@@ -28,6 +27,16 @@ const getCache = async function (key) {
         const cacheCollection = await mainDb();
         const cursor = await cacheCollection.findOne({key: key});
         return cursor;
+    } catch (err) {
+        throw(err);
+    }
+};
+
+const getOldest = async function () {
+    try {
+        const cacheCollection = await mainDb();
+        const cursor =  await cacheCollection.find().sort({date: 1}).limit(1).toArray();
+        return cursor[0];
     } catch (err) {
         throw(err);
     }
@@ -77,6 +86,7 @@ const deleteCache = async function (key) {
 module.exports = {
     getAll,
     getCache,
+    getOldest,
     insert,
     updateCache,
     deleteAll,

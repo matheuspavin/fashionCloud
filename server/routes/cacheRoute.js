@@ -19,15 +19,14 @@ router.post('/:key', async (req, res, next) => {
     return res.send(result);
 });
 
-// Should use PATCH if i have time
-router.put('/', async (req, res, next) => {
-    const body = req.body;
-    const result = await cacheService.updateCache(body);
+router.delete('/', async (req, res, next) => {
+    const result = await cacheService.deleteAll();
     return res.send(result);
 });
 
-router.delete('/', async (req, res, next) => {
-    const result = await cacheService.deleteAll();
+router.delete('/:key', async (req, res, next) => {
+    const key = req.params.key;
+    const result = await cacheService.deleteCache(key);
     return res.send(result);
 });
 

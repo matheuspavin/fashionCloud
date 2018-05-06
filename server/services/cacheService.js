@@ -14,6 +14,7 @@ const getCache = function (key) {
 const insertCache = async function (key, body) {
     const cache = createNewCache(key, body);
     const validate = await validateCache(cache);
+    await validateCacheEntries();
     return databaseService.updateCache(cache);
 };
 
@@ -63,8 +64,13 @@ const validateTtl = async function (cache) {
     return (Math.abs(diff/1000) < cache.ttl);
 };
 
-
-
+const validateCacheEntries  = async function () {
+    const caches = await getAll();
+    if (caches.length >= 5) {
+        const oldest = await databaseService.getOldest();
+        await databaseService.deleteCache(oldest.key);
+    }
+};
 
 module.exports = {
     getAll,

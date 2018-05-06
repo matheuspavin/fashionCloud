@@ -39,7 +39,7 @@ describe('Cache tests',  function () {
             expect(caches.length).to.be.equal(5);
         });
 
-        it.only('Should try to get a expired ttl cache ', async function () {
+        it('Should try to get a expired ttl cache ', async function () {
             const newCache = { 
                 key: 'Test key',
                 ttl: 1
@@ -70,6 +70,23 @@ describe('Cache tests',  function () {
             }
             const cache = await cacheService.insertCache(newCache.key);
             expect(cache.key).to.be.equal(newCache.key);
+        });
+
+        it('Should create above the maximu quantity of caches', async function () {
+            const keys = [
+                { key: 'Test 1'},
+                { key: 'Test 2'},
+                { key: 'Test 3'},
+                { key: 'Test 4'},
+                { key: 'Test 5'},
+                { key: 'Test 6'},
+            ]
+            for (key of keys) {
+                await sleep(500);
+                await cacheService.insertCache(key.key, {});
+            }
+            const caches = await cacheService.getAll();
+            expect(caches.length).to.be.equal(5);
         });
     });
 
